@@ -6,7 +6,16 @@
            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
            http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
+    <!-- Property Placeholder Configurer -->
+    <bean id="propertyConfigurer" class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:database.properties</value>
+            </list>
+        </property>
+    </bean>
 
+    <!-- DataSource Configuration -->
     <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">
         <property name="jdbcUrl" value="${jdbc.url}"/>
         <property name="username" value="${jdbc.username}"/>
@@ -14,7 +23,7 @@
         <property name="driverClassName" value="${jdbc.driver}"/>
     </bean>
 
-
+    <!-- EntityManagerFactory Configuration -->
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="packagesToScan" value="com.smartlogi.entity"/>
@@ -30,15 +39,14 @@
         </property>
     </bean>
 
-
+    <!-- Transaction Manager -->
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
 
-
+    <!-- JPA Repositories -->
     <jpa:repositories base-package="com.smartlogi.repository" />
-
-
+    <!-- Service Beans -->
     <bean id="livreurService" class="com.smartlogi.sevice.impl.LivreurServiceImpl">
         <constructor-arg ref="livreurRepository" />
     </bean>
@@ -46,7 +54,4 @@
     <bean id="colisService" class="com.smartlogi.sevice.impl.ColisServiceImpl">
         <property name="colisRepository" ref="colisRepository" />
     </bean>
-
-
-
 </beans>
