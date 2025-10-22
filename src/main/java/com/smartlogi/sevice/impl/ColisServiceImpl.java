@@ -11,7 +11,6 @@ import com.smartlogi.sevice.ColisService;
 import java.util.List;
 import java.util.Optional;
 
-// Notice @Service is removed
 public class ColisServiceImpl implements ColisService {
 
     private ColisRepository colisRepository;
