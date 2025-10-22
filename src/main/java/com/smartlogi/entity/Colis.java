@@ -13,6 +13,8 @@ import java.util.UUID;
 
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "Colis")
 public class Colis{
     @Id
@@ -32,7 +34,7 @@ public class Colis{
     private String phoneNumber;
 
     @OneToMany(mappedBy = "courier",cascade = CascadeType.ALL)
-    private List<> deliveries;
+    private List<Livreur> livreurs;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -40,10 +42,4 @@ public class Colis{
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public Colis(String lastName, String firstName, String vehicle, String phoneNumber) {
-        this.lastName = lastName;
-        this.firstName = firstName;
-        this.vehicle = vehicle;
-        this.phoneNumber = phoneNumber;
-    }
 }
