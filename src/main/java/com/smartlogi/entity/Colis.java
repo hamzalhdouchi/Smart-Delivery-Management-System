@@ -1,45 +1,23 @@
 package com.smartlogi.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Table(name = "Colis")
-public class Colis{
+public class Colis {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private Long id;
 
-    @Column(name = "last_name",nullable = false)
-    private String lastName;
+    private String destinataire;
 
-    @Column(name = "first_name",nullable = false)
-    private String firstName;
+    private String adresse;
 
-    @Column(nullable = false)
-    private String vehicle;
+    private double poids;
 
-    @Column(name = "phone_number",nullable = false,unique = true)
-    private String phoneNumber;
+    private String statut;
 
-    @OneToMany(mappedBy = "courier",cascade = CascadeType.ALL)
-    private List<Livreur> livreurs;
-
-    @CreationTimestamp
-    private LocalDateTime createdAt;
-
-    @UpdateTimestamp
-    private LocalDateTime updatedAt;
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "livreur_id")
+    private Livreur livreur;
 }
