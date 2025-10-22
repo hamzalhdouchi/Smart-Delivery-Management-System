@@ -1,5 +1,6 @@
 package com.smartlogi.entity;
 
+import com.smartlogi.enums.ColisStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -15,7 +16,7 @@ public class Colis {
 
     private double poids;
 
-    private String statut;
+    private ColisStatus statut;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "livreur_id")
