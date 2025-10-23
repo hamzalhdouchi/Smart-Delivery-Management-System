@@ -27,10 +27,8 @@ public class ColisController {
     public ResponseEntity<Colis> createColis(@RequestBody CreateColisRequest colisDTO) {
         try {
             Colis savedColis = colisService.saveColis(colisDTO);
-            // Return 201 Created status
             return new ResponseEntity<>(savedColis, HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
-            // Handle validation error from service (Destinataire required)
             return new ResponseEntity<>((HttpHeaders)null, HttpStatus.BAD_REQUEST);
         }
     }
@@ -39,7 +37,6 @@ public class ColisController {
     public ResponseEntity<Colis> getColisById(@PathVariable("id") Long id) {
         Optional<Colis> colisOptional = colisService.getColisById(id);
 
-        // Return 200 OK if found, 404 Not Found otherwise
         return colisOptional
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
