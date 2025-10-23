@@ -96,7 +96,7 @@ Les opérations CRUD et la relation entre `Livreur` et `Colis` sont validées vi
 
 ---
 
-## 💡 Bonus : Utilisation de l'API RESTful (Spring MVC)
+##  Bonus : Utilisation de l'API RESTful (Spring MVC)
 
 Si le module Spring MVC est activé, l'API est accessible via `http://localhost:8080`.
 
@@ -111,7 +111,7 @@ Si le module Spring MVC est activé, l'API est accessible via `http://localhost:
 Utilisez **Postman** pour tester ces endpoints en envoyant des requêtes avec des corps de messages au format JSON.
 
 
-## 💡 Diagramme Class
+##  Diagramme Class
 
 
 
