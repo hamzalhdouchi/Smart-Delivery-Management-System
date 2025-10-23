@@ -1,6 +1,6 @@
-# 📦 Smart Delivery Management System (SDMS) pour SmartLogi
+#  Smart Delivery Management System (SDMS) pour SmartLogi
 
-## 🎯 Contexte et Objectifs du Projet
+##  Contexte et Objectifs du Projet
 
 La société **SmartLogi** souhaite moderniser et automatiser sa gestion des livraisons. Le système actuel, basé sur des fichiers Excel et des registres papier, est source d'erreurs, de retards, de doubles enregistrements et d'une visibilité très limitée.
 
@@ -8,7 +8,7 @@ Le **Smart Delivery Management System (SDMS)** est la première version d'un sys
 1. Les informations sur les colis et les livreurs.
 2. La planification et le suivi en temps réel des livraisons.
 
-## ✨ Fonctionnalités Implémentées (User Stories)
+##  Fonctionnalités Implémentées (User Stories)
 
 Le système implémente les fonctionnalités de gestion de base pour le gestionnaire logistique :
 
@@ -22,7 +22,7 @@ Le système implémente les fonctionnalités de gestion de base pour le gestionn
 
 ---
 
-## 🛠️ Stack Technique
+## ️ Stack Technique
 
 Ce projet est construit autour de l'écosystème Spring pour une architecture robuste et maintenable.
 
@@ -35,7 +35,7 @@ Ce projet est construit autour de l'écosystème Spring pour une architecture ro
 * **Gestion de Projet :** Maven
 * **Versionnement :** Git / GitHub
 
-## ⚙️ Détails Techniques
+##  Détails Techniques
 
 ### 1. Modèle de Données (Entités)
 
@@ -62,7 +62,7 @@ L'application utilise les principes fondamentaux de Spring pour la gestion des c
 
 La couche d'accès aux données est gérée par des interfaces héritant de `JpaRepository`, minimisant le code d'implémentation du DAO.
 
-## 🚀 Démarrage et Configuration
+##  Démarrage et Configuration
 
 ### Pré-requis
 
@@ -96,7 +96,7 @@ La couche d'accès aux données est gérée par des interfaces héritant de `Jpa
     mvn spring-boot:run
     ```
 
-## 🧪 Tests de la Logique Métier
+##  Tests de la Logique Métier
 
 Les opérations CRUD et la relation entre `Livreur` et `Colis` sont validées via une classe `Main` (ou des tests JUnit) incluant des scénarios comme :
 * Création d'un Livreur.
