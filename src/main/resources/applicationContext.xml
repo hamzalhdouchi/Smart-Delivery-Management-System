@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
-       xsi:schemaLocation="
-           http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-           http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
     <!-- Property Placeholder Configurer -->
     <bean id="propertyConfigurer" class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
@@ -28,7 +28,11 @@
         <property name="dataSource" ref="dataSource"/>
         <property name="packagesToScan" value="com.smartlogi.entity"/>
         <property name="jpaVendorAdapter">
-            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="showSql" value="true"/>
+                <property name="generateDdl" value="true"/>
+                <property name="database" value="POSTGRESQL"/>
+            </bean>
         </property>
         <property name="jpaProperties">
             <props>
@@ -46,12 +50,102 @@
 
     <!-- JPA Repositories -->
     <jpa:repositories base-package="com.smartlogi.repository" />
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <mvc:annotation-driven/>
+
+    <mvc:annotation-driven/>
+    <context:component-scan base-package="com.smartlogi"/>
     <!-- Service Beans -->
     <bean id="livreurService" class="com.smartlogi.sevice.impl.LivreurServiceImpl">
         <constructor-arg ref="livreurRepository" />
     </bean>
 
     <bean id="colisService" class="com.smartlogi.sevice.impl.ColisServiceImpl">
+        <property name="livreurRepository" ref="livreurRepository"/>
         <property name="colisRepository" ref="colisRepository" />
     </bean>
 </beans>
+
+
+
+<!--        <?xml version="1.0" encoding="UTF-8"?>-->
+<!--<beans xmlns="http://www.springframework.org/schema/beans"-->
+<!--       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
+<!--       xmlns:jpa="http://www.springframework.org/schema/data/jpa"-->
+<!--       xmlns:tx="http://www.springframework.org/schema/tx"-->
+<!--       xmlns:mvc="http://www.springframework.org/schema/mvc"-->
+<!--       xmlns:context="http://www.springframework.org/schema/context"-->
+<!--       xsi:schemaLocation="http://www.springframework.org/schema/beans-->
+<!--           http://www.springframework.org/schema/beans/spring-beans.xsd-->
+<!--           http://www.springframework.org/schema/data/jpa-->
+<!--           http://www.springframework.org/schema/data/jpa/spring-jpa.xsd-->
+<!--           http://www.springframework.org/schema/tx-->
+<!--           http://www.springframework.org/schema/tx/spring-tx.xsd-->
+<!--           http://www.springframework.org/schema/mvc-->
+<!--           http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">-->
+
+<!--&lt;!&ndash; ========================================= &ndash;&gt;-->
+<!--&lt;!&ndash; DATABASE & JPA CONFIGURATION              &ndash;&gt;-->
+<!--&lt;!&ndash; ========================================= &ndash;&gt;-->
+
+<!--<context:component-scan base-package="com.smartlogi"/>-->
+
+<!--&lt;!&ndash; DataSource Configuration (PostgreSQL) &ndash;&gt;-->
+<!--<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
+<!--    <property name="driverClassName" value="org.postgresql.Driver"/>-->
+<!--    <property name="url" value="jdbc:postgresql://localhost:5432/smartdelivery"/>-->
+<!--    <property name="username" value="postgres"/>-->
+<!--    <property name="password" value="123456789"/>  &lt;!&ndash; CHANGE THIS &ndash;&gt;-->
+<!--</bean>-->
+
+<!--&lt;!&ndash; EntityManagerFactory &ndash;&gt;-->
+<!--<bean id="entityManagerFactory"-->
+<!--      class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">-->
+<!--    <property name="dataSource" ref="dataSource"/>-->
+<!--    <property name="packagesToScan" value="com.smartlogi.entity"/>-->
+<!--    <property name="jpaVendorAdapter">-->
+<!--        <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">-->
+<!--            <property name="showSql" value="true"/>-->
+<!--            <property name="generateDdl" value="true"/>-->
+<!--            <property name="database" value="POSTGRESQL"/>-->
+<!--        </bean>-->
+<!--    </property>-->
+<!--    <property name="jpaProperties">-->
+<!--        <props>-->
+<!--            <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</prop>-->
+<!--            <prop key="hibernate.hbm2ddl.auto">update</prop>-->
+<!--            <prop key="hibernate.format_sql">true</prop>-->
+<!--            <prop key="hibernate.jdbc.lob.non_contextual_creation">true</prop>-->
+<!--        </props>-->
+<!--    </property>-->
+<!--</bean>-->
+
+<!--&lt;!&ndash; Transaction Manager &ndash;&gt;-->
+<!--<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">-->
+<!--    <property name="entityManagerFactory" ref="entityManagerFactory"/>-->
+<!--</bean>-->
+
+<!--&lt;!&ndash; Enable @Transactional annotations &ndash;&gt;-->
+<!--<tx:annotation-driven transaction-manager="transactionManager"/>-->
+
+<!--&lt;!&ndash; Enable JPA Repositories (Creates repository beans automatically) &ndash;&gt;-->
+<!--<jpa:repositories base-package="com.smartlogi.repository"/>-->
+
+
+<!--<mvc:annotation-driven/>-->
+<!--&lt;!&ndash; ========================================= &ndash;&gt;-->
+<!--&lt;!&ndash; SERVICE BEANS                             &ndash;&gt;-->
+<!--&lt;!&ndash; ========================================= &ndash;&gt;-->
+
+<!--&lt;!&ndash; LivreurService - Constructor Injection &ndash;&gt;-->
+<!--<bean id="livreurService" class="com.smartlogi.service.LivreurService">-->
+<!--    <constructor-arg ref="livreurRepository"/>-->
+<!--</bean>-->
+
+<!--&lt;!&ndash; ColisService - Setter Injection &ndash;&gt;-->
+<!--<bean id="colisService" class="com.smartlogi.service.ColisService">-->
+<!--    <property name="livreurRepository" ref="livreurRepository"/>-->
+<!--    <property name="colisRepository" ref="colisRepository"/>-->
+<!--</bean>-->
+
+<!--</beans>-->
