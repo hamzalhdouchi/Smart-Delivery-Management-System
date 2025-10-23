@@ -2,6 +2,7 @@ package com.smartlogi.controller;
 
 import com.smartlogi.entity.Livreur;
 import com.smartlogi.sevice.LivreurService;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,17 +25,15 @@ public class LivreurController {
     public ResponseEntity<Livreur> createLivreur(@RequestBody Livreur livreur) {
         try {
             Livreur savedLivreur = livreurService.saveLivreur(livreur);
-            // Return 201 Created status with the saved entity in the body
-            return new ResponseEntity<>(savedLivreur, HttpStatus.CREATED);
+            return new ResponseEntity<>(savedLivreur ,HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
-            // Handle the validation exception from your service
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>((HttpHeaders) null, HttpStatus.BAD_REQUEST);
         }
     }
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<Livreur> getLivreurById(@PathVariable Long id) {
+    public ResponseEntity<Livreur> getLivreurById(@PathVariable("id") Long id) {
         Optional<Livreur> livreurOptional = livreurService.getLivreurById(id);
 
         return livreurOptional
@@ -51,7 +50,7 @@ public class LivreurController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<Livreur> updateLivreur(@PathVariable Long id, @RequestBody Livreur livreurDetails) {
+    public ResponseEntity<Livreur> updateLivreur(@PathVariable("id") Long id, @RequestBody Livreur livreurDetails) {
         try {
             Livreur updatedLivreur = livreurService.updateLivreur(id, livreurDetails);
             return ResponseEntity.ok(updatedLivreur);
@@ -62,13 +61,13 @@ public class LivreurController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteLivreur(@PathVariable Long id) {
+    public ResponseEntity<String> deleteLivreur(@PathVariable("id") Long id) {
         try {
             if (!livreurService.getLivreurById(id).isPresent()) {
                 return ResponseEntity.notFound().build();
             }
             livreurService.deleteLivreur(id);
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.ok("the s");
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
