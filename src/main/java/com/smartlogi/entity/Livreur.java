@@ -1,5 +1,6 @@
 package com.smartlogi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.smartlogi.entity.Colis;
 import jakarta.persistence.Entity;
 import jakarta.persistence.*;
@@ -18,6 +19,7 @@ import java.util.List;
 @Table(name = "livreur")
 public class Livreur {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String nom;
@@ -32,7 +34,7 @@ public class Livreur {
 
     private String email;
 
-    @OneToMany(mappedBy = "livreur", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "livreur", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Colis> colisList = new ArrayList<>();
 
 }
