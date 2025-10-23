@@ -57,6 +57,8 @@ public class ColisController {
         return ResponseEntity.noContent().build();
     }
 
+
+
     @GetMapping("/livreur/{livreurId}")
     public ResponseEntity<List<Colis>> getColisByLivreur(@PathVariable("livreurId") Long livreurId) {
         List<Colis> colisList = colisService.getColisByLivreurId(livreurId);
