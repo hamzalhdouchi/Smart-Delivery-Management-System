@@ -1,5 +1,6 @@
 package com.smartlogi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.smartlogi.enums.ColisStatus;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -8,6 +9,7 @@ import lombok.Data;
 @Data
 public class Colis {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String destinataire;
@@ -20,5 +22,6 @@ public class Colis {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "livreur_id")
+    @JsonIgnore
     private Livreur livreur;
 }
