@@ -77,17 +77,7 @@ La couche d'accès aux données est gérée par des interfaces héritant de `Jpa
     git clone <URL_DU_DEPOT>
     cd SmartLogi-SDMS
     ```
-
-2.  **Configuration de la Base de Données :**
-    Modifiez le fichier `src/main/resources/application.properties` (ou `application.yml`) pour y ajouter les informations de votre base de données PostgreSQL :
-    ```properties
-    spring.datasource.url=jdbc:postgresql://localhost:5432/smartlogi_db
-    spring.datasource.username=your_user
-    spring.datasource.password=your_password
-    spring.jpa.hibernate.ddl-auto=update # ou create pour le premier lancement
-    ```
-
-3.  **Construction et Exécution :**
+3. **Construction et Exécution :**
     ```bash
     # Construire le projet (téléchargement des dépendances)
     mvn clean install
