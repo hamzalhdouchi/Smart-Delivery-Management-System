@@ -65,4 +65,3 @@
         <property name="colisRepository" ref="colisRepository" />
     </bean>
 </beans>
-
