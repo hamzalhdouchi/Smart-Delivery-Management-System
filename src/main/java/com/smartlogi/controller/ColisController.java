@@ -4,6 +4,7 @@ import com.smartlogi.dto.CreateColisRequest;
 import com.smartlogi.entity.Colis;
 import com.smartlogi.enums.ColisStatus;
 import com.smartlogi.sevice.ColisService;
+import com.smartlogi.util.ColisValidPattern;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,12 +25,22 @@ public class ColisController {
     }
 
     @PostMapping
-    public ResponseEntity<Colis> createColis(@RequestBody CreateColisRequest colisDTO) {
+    public ResponseEntity<String> createColis(@RequestBody CreateColisRequest colisDTO) {
         try {
+
+            String validationMessage = ColisValidPattern.validerColisRequest(colisDTO);
+            if (validationMessage != null) {
+                return new ResponseEntity<>(validationMessage, HttpStatus.BAD_REQUEST);
+            }
             Colis savedColis = colisService.saveColis(colisDTO);
-            return new ResponseEntity<>(savedColis, HttpStatus.CREATED);
+            if (savedColis == null) {
+                return new ResponseEntity<>("Failed to save Colis due to an internal error.", HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+            return new ResponseEntity<>("Colis Created Successfully", HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>((HttpHeaders)null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }catch (Exception e) {
+            return new ResponseEntity<>("An unexpected error occurred during Colis creation.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
