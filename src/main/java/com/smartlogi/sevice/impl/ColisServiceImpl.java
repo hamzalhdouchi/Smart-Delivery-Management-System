@@ -32,6 +32,7 @@ public class ColisServiceImpl implements ColisService {
         if (colisDTO.getIdLivreur() == null) {
             throw new IllegalArgumentException("Livreur id is required");
         }
+
         Livreur livreur = livreurRepository.findById(colisDTO.getIdLivreur())
                 .orElseThrow(() -> new IllegalArgumentException("Livreur id not found"));
         Colis colis = new Colis();
