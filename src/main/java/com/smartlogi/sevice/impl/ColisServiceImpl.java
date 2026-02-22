@@ -64,11 +64,17 @@ public class ColisServiceImpl implements ColisService {
         colisRepository.deleteById(id);
     }
 
+
     @Override
-    public void updateColisStatut(Long id, ColisStatus statut) {
-        Colis colis = colisRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Colis not found"));
-        colis.setStatut(statut);
-        colisRepository.save(colis);
+    public void  updateColisStatut(Long id ,ColisStatus  statut) {
+        Colis colis = colisRepository.findById(id).orElse(null);
+
+        if (colis!=null ) {
+            colis.setStatut(statut);
+            colisRepository.save(colis);
+        }else {
+            throw new  IllegalArgumentException("Colis id not found");
+        }
+
     }
 }
